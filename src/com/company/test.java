@@ -1,8 +1,9 @@
 package com.company;
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 
-public class test extends JFrame{
+public class test extends JFrame implements ActionListener{
     testEvent test = new testEvent();
     Graphics g;
     JFrame frame = new JFrame();
@@ -61,6 +62,9 @@ public class test extends JFrame{
         // avatar panel
         avatar.setBounds(320,0,400,800);
         avatar.setBorder(BorderFactory.createLineBorder(Color.black));
+        g= avatar.getGraphics();
+        avatar.paintComponents(g);
+
         frame.add(avatar);
 
         // faces panel
@@ -104,6 +108,7 @@ public class test extends JFrame{
                 else if (i*4 + j == 15) faces[i][j].setIcon(face16);
             }
         }
+        faces[0][0].addActionListener(this);
         frame.add(facePanel2);
 
         //
@@ -111,13 +116,21 @@ public class test extends JFrame{
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
     }
 
-    public void paint(Graphics g) {  //????????
-        //g = avatar.getGraphics();
-        //avatar.paintComponents(g);
+    @Override
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource()==faces[0][0]){
+            System.out.print("hi");
+        }
+
+    }
+    public void paint(Graphics g1) {  //????????
+        g = avatar.getGraphics();
+        avatar.paintComponents(g);
         g.setColor(Color.green);
-        g.drawOval(400,100,50,50);
+        g.drawOval(10,10,50,50);
 
     }
 
