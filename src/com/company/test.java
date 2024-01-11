@@ -2,33 +2,37 @@ package com.company;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 public class test extends JFrame implements ActionListener{
-    testEvent test = new testEvent();
     Graphics g;
     JFrame frame = new JFrame();
     JPanel panel = new JPanel();
     JButton faceButton = new JButton("Face");
     JPanel facePanel = new JPanel();
     JPanel facePanel2 = new JPanel();
-    JButton[ ][ ] faces = new JButton[4][4];
+    JButton[ ] faces = new JButton[16];
     JLabel faceLabel = new JLabel("Face");
-    ImageIcon face1 = new ImageIcon("face1.png");
-    ImageIcon face2 = new ImageIcon("face2.png");
-    ImageIcon face3 = new ImageIcon("face3.png");
-    ImageIcon face4 = new ImageIcon("face4.png");
-    ImageIcon face5 = new ImageIcon("face5.png");
-    ImageIcon face6 = new ImageIcon("face6.png");
-    ImageIcon face7 = new ImageIcon("face7.png");
-    ImageIcon face8 = new ImageIcon("face8.png");
-    ImageIcon face9 = new ImageIcon("face9.png");
-    ImageIcon face10 = new ImageIcon("face10.png");
-    ImageIcon face11 = new ImageIcon("face11.png");
-    ImageIcon face12 = new ImageIcon("face12.png");
-    ImageIcon face13 = new ImageIcon("face13.png");
-    ImageIcon face14 = new ImageIcon("face14.png");
-    ImageIcon face15 = new ImageIcon("face15.png");
-    ImageIcon face16 = new ImageIcon("face16.png");
+    JLabel head = new JLabel();
+    int headX = 150, headY = 200, headWidth = 100;
+    ImageIcon robloxHead = new ImageIcon(new ImageIcon("roblox head2.png").getImage().getScaledInstance(headWidth, headWidth, Image.SCALE_DEFAULT));
+    JLabel avatarFace = new JLabel();
+    ImageIcon face1 = new ImageIcon(new ImageIcon("face1.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face2 = new ImageIcon(new ImageIcon("face2.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face3 = new ImageIcon(new ImageIcon("face3.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face4 = new ImageIcon(new ImageIcon("face4.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face5 = new ImageIcon(new ImageIcon("face5.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face6 = new ImageIcon(new ImageIcon("face6.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face7 = new ImageIcon(new ImageIcon("face7.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face8 = new ImageIcon(new ImageIcon("face8.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face9 = new ImageIcon(new ImageIcon("face9.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face10 = new ImageIcon(new ImageIcon("face10.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face11 = new ImageIcon(new ImageIcon("face11.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face12 = new ImageIcon(new ImageIcon("face12.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face13 = new ImageIcon(new ImageIcon("face13.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face14 = new ImageIcon(new ImageIcon("face14.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face15 = new ImageIcon(new ImageIcon("face15.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
+    ImageIcon face16 = new ImageIcon(new ImageIcon("face16.png").getImage().getScaledInstance(125, 125, Image.SCALE_DEFAULT));
     JButton clothingButton = new JButton("Clothing");
     GridLayout gridLayout = new GridLayout(4,4,10,10);
     JPanel avatar = new JPanel();
@@ -41,14 +45,23 @@ public class test extends JFrame implements ActionListener{
 //        }
 //    }
 
-    public test(){
-        frame.setBounds(300,100,1300,800);
+    public test() throws IOException{
 
+        // frame -----------------------------------------------
+        frame.setLayout(null);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBounds(300,100,1300,800);
+        frame.getContentPane().setBackground(Color.white);
+
+        // side panel -----------------------------------------------
         panel.setBounds(0,0,240,800);
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
+
         faceButton.setBounds(18,120,200,50);
         faceButton.setFont(new Font("Helvetica", Font.BOLD, 20));
         faceButton.setFocusable(false);
+
         panel.add(faceButton);
 
         clothingButton.setBounds(18,190,200,50);
@@ -59,15 +72,24 @@ public class test extends JFrame implements ActionListener{
         panel.setLayout(null);
         frame.add(panel);
 
-        // avatar panel
+        // avatar panel -----------------------------------------------
+        avatar.setLayout(null);
         avatar.setBounds(320,0,400,800);
         avatar.setBorder(BorderFactory.createLineBorder(Color.black));
-        g= avatar.getGraphics();
-        avatar.paintComponents(g);
+        head.setBounds(headX, headY, headWidth, headWidth);
+        head.setBorder(BorderFactory.createLineBorder(Color.black));
+        //head.setHorizontalAlignment(SwingConstants.LEFT); // ***
+        head.setIcon(robloxHead);
+        ImageIcon faceResized = new ImageIcon(face1.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+        avatarFace.setIcon(faceResized);  // default face, resized
+        avatarFace.setBounds(headX, headY, headWidth, headWidth);
+        avatarFace.setBorder(BorderFactory.createLineBorder(Color.red));
+        avatar.add(avatarFace);
+        avatar.add(head);
 
         frame.add(avatar);
 
-        // faces panel
+        // faces panel -----------------------------------------------
         facePanel.setBounds(740,0,560,800);
         facePanel.setBorder(BorderFactory.createLineBorder(Color.black));
         frame.add(facePanel);
@@ -77,66 +99,105 @@ public class test extends JFrame implements ActionListener{
         faceLabel.setFont(new Font("SansSerif", Font.BOLD, 50));
         facePanel.add(faceLabel);
 
-        int num = 37; // used in the next line--played around with the scaling of the images in the grid to fit my panel
+        int num = 37; // scaling of images in grid
         facePanel2.setBounds(740,180,15*num,15*num);
         facePanel2.setBorder(BorderFactory.createLineBorder(Color.red));
         facePanel2.setBorder(BorderFactory.createEmptyBorder(0,10,20,20));
         facePanel2.setLayout(gridLayout);
-        for (int i=0; i<4; i++) {
-            for (int j=0; j<4; j++) {
-                //String name = "face" + Integer.toString(i*3 + j + 1);  // goes from 1-12
-                faces[i][j] = new JButton();
-                facePanel2.add(faces[i][j]);
-                if (i*3 + j == 0) {  // ???????
-                    System.out.println('a');
-                    faces[i][j].setIcon(face1);
-                }
-                else if (i*4 + j == 1) faces[i][j].setIcon(face2);
-                else if (i*4 + j == 2) faces[i][j].setIcon(face3);
-                else if (i*4 + j == 3) faces[i][j].setIcon(face4);
-                else if (i*4 + j == 4) faces[i][j].setIcon(face5);
-                else if (i*4 + j == 5) faces[i][j].setIcon(face6);
-                else if (i*4 + j == 6) faces[i][j].setIcon(face7);
-                else if (i*4 + j == 7) faces[i][j].setIcon(face8);
-                else if (i*4 + j == 8) faces[i][j].setIcon(face9);
-                else if (i*4 + j == 9) faces[i][j].setIcon(face10);
-                else if (i*4 + j == 10) faces[i][j].setIcon(face11);
-                else if (i*4 + j == 11) faces[i][j].setIcon(face12);
-                else if (i*4 + j == 12) faces[i][j].setIcon(face13);
-                else if (i*4 + j == 13) faces[i][j].setIcon(face14);
-                else if (i*4 + j == 14) faces[i][j].setIcon(face15);
-                else if (i*4 + j == 15) faces[i][j].setIcon(face16);
-            }
+        for (int i=0; i<16; i++) {
+            //String name = "face" + Integer.toString(i*3 + j + 1);  // goes from 1-12
+            faces[i] = new JButton();
+            facePanel2.add(faces[i]);
+            faces[i].addActionListener(this);
         }
-        faces[0][0].addActionListener(this);
+        faces[0].setIcon(face1);
+        faces[1].setIcon(face2);
+        faces[2].setIcon(face3);
+        faces[3].setIcon(face4);
+        faces[4].setIcon(face5);
+        faces[5].setIcon(face6);
+        faces[6].setIcon(face7);
+        faces[7].setIcon(face8);
+        faces[8].setIcon(face9);
+        faces[9].setIcon(face10);
+        faces[10].setIcon(face11);
+        faces[11].setIcon(face12);
+        faces[12].setIcon(face13);
+        faces[13].setIcon(face14);
+        faces[14].setIcon(face15);
+        faces[15].setIcon(face16);
         frame.add(facePanel2);
 
-        //
-        frame.setLayout(null);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
     }
+
+//    @Override
+//    public void paint(Graphics g) {
+//        frame.paintComponents(g);
+//        Image img = Toolkit.getDefaultToolkit().getImage("background.avif");
+//        g.drawImage(img,0,0,null);
+//
+//    }
 
     @Override
     public void actionPerformed(ActionEvent e){
-        if(e.getSource()==faces[0][0]){
-            System.out.print("hi");
+        if(e.getSource() == faces[0]){
+            ImageIcon faceResized = new ImageIcon(face1.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[1]){
+            ImageIcon faceResized = new ImageIcon(face2.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[2]){
+            ImageIcon faceResized = new ImageIcon(face3.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[3]){
+            ImageIcon faceResized = new ImageIcon(face4.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[4]){
+            ImageIcon faceResized = new ImageIcon(face5.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[5]){
+            ImageIcon faceResized = new ImageIcon(face6.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[6]){
+            ImageIcon faceResized = new ImageIcon(face7.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[7]){
+            ImageIcon faceResized = new ImageIcon(face8.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[8]){
+            ImageIcon faceResized = new ImageIcon(face9.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[9]){
+            ImageIcon faceResized = new ImageIcon(face10.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[10]){
+            ImageIcon faceResized = new ImageIcon(face11.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[11]){
+            ImageIcon faceResized = new ImageIcon(face12.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[12]){
+            ImageIcon faceResized = new ImageIcon(face13.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[13]){
+            ImageIcon faceResized = new ImageIcon(face14.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[14]){
+            ImageIcon faceResized = new ImageIcon(face15.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
+        } else if (e.getSource() == faces[15]){
+            ImageIcon faceResized = new ImageIcon(face16.getImage().getScaledInstance(headWidth,headWidth, Image.SCALE_DEFAULT));
+            avatarFace.setIcon(faceResized);
         }
 
-    }
-    public void paint(Graphics g1) {  //????????
-        g = avatar.getGraphics();
-        avatar.paintComponents(g);
-        g.setColor(Color.green);
-        g.drawOval(10,10,50,50);
 
     }
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         test object = new test();
         //object.paint(object.getGraphics());
     }
